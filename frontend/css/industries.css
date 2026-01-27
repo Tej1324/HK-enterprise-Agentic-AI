@@ -1,0 +1,77 @@
+/* =====================================================
+   INDUSTRIES PAGE – FINAL STYLES
+   Applies ONLY to industries.html
+===================================================== */
+
+/* ================= PAGE HEADER ================= */
+.page-title {
+  text-align: center;
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.page-subtitle {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--gray);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* ================= SECTION ================= */
+.section {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.section-tight {
+  margin-top: 60px;
+}
+
+/* ================= GRID ================= */
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* ================= CARD ================= */
+.industry-card {
+  background: #ffffff;
+  padding: 34px 30px;
+  border-radius: 16px;
+  border-top: 4px solid var(--primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.industry-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.12);
+}
+
+.industry-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.industry-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--gray);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.1rem;
+  }
+
+  .section {
+    margin: 60px auto;
+  }
+}

@@ -1,0 +1,109 @@
+/* =====================================================
+   INFRASTRUCTURE PAGE – FINAL STYLES
+   Applies ONLY to infrastructure.html
+===================================================== */
+
+/* ================= PAGE HEADER ================= */
+.page-title {
+  text-align: center;
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.page-subtitle {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--gray);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* ================= SECTION ================= */
+.section {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.section-tight {
+  margin-top: 60px;
+}
+
+.section-soft {
+  background: var(--light);
+  padding: 80px 20px;
+  border-radius: 22px;
+}
+
+/* ================= HEADINGS ================= */
+.section h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.section > p {
+  max-width: 880px;
+  margin: 0 auto 45px;
+  text-align: center;
+  color: var(--gray);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* ================= GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* ================= CARD ================= */
+.card {
+  background: #ffffff;
+  padding: 34px 30px;
+  border-radius: 14px;
+  border-left: 5px solid var(--primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ================= QUALITY SECTION OVERRIDE ================= */
+.section-soft .card {
+  border-left-color: #0f172a;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.1rem;
+  }
+
+  .section {
+    margin: 60px auto;
+  }
+
+  .section h2 {
+    font-size: 1.9rem;
+  }
+}

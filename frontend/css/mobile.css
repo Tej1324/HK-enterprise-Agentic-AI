@@ -1,0 +1,250 @@
+/* =====================================================
+   MOBILE RESPONSIVE STYLES – ALL PAGES
+   Attached to every HTML file
+   ===================================================== */
+
+
+/* ================== GENERAL ================== */
+@media (max-width: 1024px) {
+
+  body {
+    padding-top: 72px;
+  }
+
+  .section {
+    padding: 70px 6%;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.6rem);
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+  }
+}
+
+
+/* ================== HEADER & NAV ================== */
+@media (max-width: 900px) {
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    display: none; /* future: hamburger menu */
+  }
+}
+
+
+/* ================== HERO ================== */
+@media (max-width: 768px) {
+
+  .hero {
+    height: 70vh;
+  }
+
+  .overlay h1 {
+    font-size: 2.3rem;
+  }
+
+  .overlay p {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .btn {
+    padding: 12px 26px;
+    font-size: 0.95rem;
+  }
+}
+
+
+/* ================== GRID SYSTEM ================== */
+@media (max-width: 768px) {
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .card {
+    padding: 26px;
+  }
+}
+
+
+/* ================== IMPACT SECTION (INDEX) ================== */
+@media (max-width: 768px) {
+
+  .impact-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .span-2x2,
+  .span-2x1 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .impact-card {
+    min-height: 220px;
+  }
+
+  .impact-card h3 {
+    font-size: 2.4rem;
+  }
+
+  .impact-header h2 {
+    font-size: 2.4rem;
+  }
+}
+
+
+/* ================== SERVICES PAGE ================== */
+@media (max-width: 768px) {
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capacity-bar {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+  }
+}
+
+
+/* ================== ABOUT PAGE ================== */
+@media (max-width: 768px) {
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .leader-card {
+    grid-template-columns: 1fr;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .leader-photo {
+    margin: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ================== INFRASTRUCTURE PAGE ================== */
+@media (max-width: 768px) {
+
+  .facility-grid,
+  .machine-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quality-badges {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================== INDUSTRIES PAGE ================== */
+@media (max-width: 768px) {
+
+  .industries-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================== CONTACT PAGE ================== */
+@media (max-width: 768px) {
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-wrapper {
+    padding: 24px;
+  }
+
+  .map-wrapper iframe {
+    height: 320px;
+  }
+
+  .contact-cta {
+    padding: 50px 6%;
+  }
+
+  .contact-cta h2 {
+    font-size: 1.8rem;
+  }
+}
+
+
+/* ================== FOOTER ================== */
+@media (max-width: 768px) {
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-title {
+    font-size: 1.6rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.85rem;
+  }
+}
+
+
+/* ================== WHATSAPP ================== */
+@media (max-width: 768px) {
+
+  .whatsapp {
+    right: 16px;
+    bottom: 16px;
+    padding: 14px;
+    font-size: 24px;
+  }
+}
+/* ================== HEADER (FINAL MOBILE OVERRIDES) ================== */
+@media (max-width: 768px) {
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    z-index: 1105;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+}
