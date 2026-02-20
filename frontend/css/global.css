@@ -365,22 +365,28 @@ p {
 
 .whatsapp-btn {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
-  background: #25d366;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  background: #25D366;
   color: white;
-  font-size: 22px;
-  padding: 16px;
   border-radius: 50%;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-  transition: transform 0.35s ease;
-  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  z-index: 9999;
 }
 
-.whatsapp-btn:hover {
-  transform: scale(1.08);
-}
 .content-container {
   max-width: 1200px;
   margin: 0 auto;
 }
+.whatsapp-btn:hover,
+#chat-toggle:hover {
+  transform: scale(1.1);
+  transition: 0.3s ease;
+}
+
