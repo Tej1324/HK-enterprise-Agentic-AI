@@ -15,12 +15,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chatToggle.addEventListener("click", () => {
 
+    chatContainer.classList.add("open");
     chatContainer.style.display = "flex";
     chatInput.focus();
 
-    // If chat is empty, show welcome message
     if (chatMessages.children.length === 0) {
-        typeWelcomeMessage();
+        addMessage(
+            "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?",
+            "ai-message"
+        );
     }
 });
 
@@ -92,15 +95,37 @@ document.addEventListener("DOMContentLoaded", function () {
     ============================== */
 
     function addMessage(text, className) {
-        const msg = document.createElement("div");
-        msg.className = "message " + className;
-        msg.textContent = text;
 
-        chatMessages.appendChild(msg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    const wrapper = document.createElement("div");
+    wrapper.className = "message-wrapper " + className;
 
-        return msg;
+    const msg = document.createElement("div");
+    msg.className = "message-bubble";
+    msg.textContent = text;
+
+    if (className === "ai-message") {
+
+        const avatar = document.createElement("div");
+        avatar.className = "ai-avatar";
+        const img = document.createElement("img");
+        img.src = "images/tufo-avatar.png";  // add your image
+        img.className = "ai-avatar-img";
+        avatar.appendChild(img);
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(msg);
+
+    } else {
+
+        wrapper.appendChild(msg);
     }
+
+    chatMessages.appendChild(wrapper);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return wrapper;
+}
 
     function typeWelcomeMessage() {
     const text = "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?";
