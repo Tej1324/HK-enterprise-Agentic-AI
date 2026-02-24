@@ -14,9 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
     ============================== */
 
     chatToggle.addEventListener("click", () => {
-        chatContainer.style.display = "flex";
-        chatInput.focus();
-    });
+
+    chatContainer.style.display = "flex";
+    chatInput.focus();
+
+    // If chat is empty, show welcome message
+    if (chatMessages.children.length === 0) {
+        typeWelcomeMessage();
+    }
+});
 
     chatClose.addEventListener("click", () => {
         chatContainer.style.display = "none";
@@ -95,5 +101,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return msg;
     }
+
+    function typeWelcomeMessage() {
+    const text = "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?";
+    const msg = document.createElement("div");
+    msg.className = "message ai-message";
+    chatMessages.appendChild(msg);
+
+    let i = 0;
+    const interval = setInterval(() => {
+        msg.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(interval);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 20);
+}
 
 });
