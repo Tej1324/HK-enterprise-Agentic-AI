@@ -15,6 +15,22 @@
 
 </head>
 <body>
+  <div id="preloader">
+  <div class="hk-watermark">HK</div>
+
+  <div class="loader-content">
+    <img src="images/TUFOBGREM.png" class="tofu-avatar" alt="Tofu AI">
+
+    <h2 class="loader-title">
+      <span class="brand-hk">Hello</span> 
+      <span class="brand-ai">I Am TUFO</span>
+    </h2>
+
+    <div class="loading-line">
+      <div class="loading-progress"></div>
+    </div>
+  </div>
+</div>
   <div id="site-header"></div>
 
 
@@ -237,7 +253,13 @@
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/chatbot.js"></script>
-
+<script>
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      document.getElementById("preloader").classList.add("hide");
+    }, 2800);
+  });
+</script>
 
 </body>
 </html>

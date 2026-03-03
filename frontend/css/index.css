@@ -1115,3 +1115,89 @@
     transform: translateY(0);
   }
 }
+/* ================= HK TOFU PRELOADER ================= */
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #f5f5f5; /* logo background tone */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  overflow: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#preloader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Background HK watermark */
+.hk-watermark {
+  position: absolute;
+  font-size: 180px;
+  font-weight: 900;
+  color: rgba(200, 0, 0, 0.05);
+  letter-spacing: 10px;
+}
+
+/* Center content */
+.loader-content {
+  text-align: center;
+  z-index: 2;
+}
+
+/* Tofu animation */
+.tofu-avatar {
+  width: 120px;
+  margin-bottom: 25px;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(255, 150, 200, 0.3));
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Title styling */
+.loader-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.brand-hk {
+  color: #c00000; /* HK red */
+}
+
+.brand-ai {
+  background: linear-gradient(90deg, #ff9acb, #a2d2ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Loading line */
+.loading-line {
+  width: 220px;
+  height: 3px;
+  background: rgba(0,0,0,0.1);
+  margin: auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  width: 0%;
+  background: #c00000; /* HK red accent */
+  animation: progressAnim 2.8s ease forwards;
+}
+
+@keyframes progressAnim {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
