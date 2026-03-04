@@ -11,10 +11,29 @@
    <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="icon" type="image/png" href="images/logo.png">
+
 
 
 </head>
 <body>
+  <div id="preloader">
+  <div class="hk-watermark">HK</div>
+
+  <div class="loader-content">
+    <img src="images/TUFOBGREM.png" class="tofu-avatar" alt="Tofu AI">
+
+    <h2 class="loader-title">
+      <span class="brand-hk">Hello</span> 
+      <span class="brand-ai">I Am TUFO</span>
+    </h2>
+
+    <div class="loading-line">
+      <div class="loading-progress"></div>
+    </div>
+  </div>
+</div>
   <div id="site-header"></div>
 
 
@@ -66,54 +85,53 @@
 </section>
 
 
-<section class="impact-section dark reveal">
+<section class="impact-section">
+
   <div class="impact-header">
-    <h2>Our Impact</h2>
-    <p>
-      Delivering engineering excellence through scale,
-      experience, and precision-driven manufacturing.
-    </p>
+    <h2>OUR IMPACT</h2>
+    <p>Delivering engineering excellence through scale and precision.</p>
   </div>
 
   <div class="impact-grid">
 
-  <div class="impact-card large span-2x2">
-    <h3 class="counter" data-target="20">0</h3>
-    <p>Years of Industry Experience</p>
-  </div>
+    <div class="impact-card card-large reveal">
+      <h3 class="counter" data-target="20" data-suffix="+">0</h3>
+      <p>Years of Industry Experience</p>
+    </div>
 
-  <div class="impact-card span-2x1">
-    <h3 class="counter" data-target="22500">0</h3>
-    <p>Sq. Ft. Manufacturing Facility</p>
-  </div>
+    <div class="impact-card image card-portrait reveal">
+      <img src="images/portrait.jpg" alt="">
+    </div>
 
-  <div class="impact-card image span-1x1">
-  <img src="images/shop-laser.jpg" alt="Laser Cutting Facility">
-  <div class="image-overlay">
-    <h4>Laser Cutting Facility</h4>
-    <p>High-precision laser operations</p>
-  </div>
-</div>
+    <div class="impact-card card-small-left reveal">
+      <h3 class="counter" data-target="22500" data-suffix="+">0</h3>
+      <p>Sq. Ft. Manufacturing Facility</p>
+    </div>
 
-  <div class="impact-card span-1x1">
-    <h3 class="counter" data-target="140">0</h3>
-    <p>Skilled Workforce</p>
-  </div>
+    <div class="impact-card image card-wide-image reveal">
+      <img src="images/factory.jpg" alt="">
+    </div>
 
-  <div class="impact-card highlight span-1x1">
-    <h3 class="counter" data-target="170">0</h3>
-    <p>Ton CNC Bending Capacity</p>
-  </div>
+    <div class="impact-card card-small-right reveal">
+      <h3 class="counter" data-target="1700" data-suffix="+">0</h3>
+      <p>Qualified Parts</p>
+    </div>
 
-  <div class="impact-card image span-2x1">
-  <img src="images/shop-fabrication.jpg" alt="Fabrication Shop">
-  <div class="image-overlay">
-    <h4>Bending machine</h4>
-    <p>Heavy structural and custom fabrication</p>
-  </div>
-</div>
+    <div class="impact-card card-bottom-left reveal">
+      <h3 class="counter" data-target="145">0</h3>
+      <p>Skilled Workforce</p>
+    </div>
 
-</div>
+    <div class="impact-card card-bottom-wide reveal">
+      <h3 class="counter" data-target="170">0</h3>
+      <p>Ton CNC Bending Capacity</p>
+    </div>
+
+    <div class="impact-card image card-bottom-image reveal">
+      <img src="images/oil.jpg" alt="">
+    </div>
+
+  </div>
 
 </section>
 
@@ -237,7 +255,13 @@
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/chatbot.js"></script>
-
+<script>
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      document.getElementById("preloader").classList.add("hide");
+    }, 2800);
+  });
+</script>
 
 </body>
 </html>
