@@ -1,51 +1,81 @@
 const footerHTML = `
 <footer class="site-footer">
+
   <div class="footer-main">
 
     <!-- LEFT -->
     <div class="footer-col footer-contact">
-      <p class="footer-phone">📞 Haresh Oza +91 9909233950</p>
-      <p class="footer-phone">📞 Jitu +91 9157317896 , 7861815051 </p>
 
-      <p class="footer-email">
-        ✉️ <a href="mailto:hkenterprise694@gmail.com">hkenterprise694@gmail.com</a>
+      <img src="images/logo.png" class="footer-logo">
+
+      <p>
+        Precision fabrication and engineering solutions delivering
+        reliability, scalability and advanced manufacturing capabilities.
       </p>
 
-      <p class="footer-address">
-        E-605, Bole GIDC,<br>
-        Sanand – II,<br>
-        Ahmedabad, Gujarat
-      </p>
+      <a href="mailto:info@hkenterprises.com" class="footer-email">
+        info@hkenterprises.com
+      </a>
+
     </div>
 
-    <!-- MIDDLE -->
+    <!-- COMPANY -->
     <div class="footer-col">
-      <h4>Company</h4>
+      <h3>Company</h3>
       <ul>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="infrastructure.html">Infrastructure</a></li>
-        <li><a href="industries.html">Industries</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Infrastructure</a></li>
+        <li><a href="#">Industries</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
 
-    <!-- RIGHT -->
+    <!-- SERVICES -->
     <div class="footer-col">
-      <h4>Terms & Policies</h4>
+      <h3>Services</h3>
       <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Laser Cutting</a></li>
+        <li><a href="#">CNC Bending</a></li>
+        <li><a href="#">Metal Fabrication</a></li>
+        <li><a href="#">Engineering</a></li>
       </ul>
     </div>
 
   </div>
 
-  <!-- BOTTOM BAR -->
+
+  <!-- BIG CTA SECTION -->
+
+  <div class="footer-cta">
+
+    <div class="cta-content">
+
+      <div class="cta-left">
+        <h2>Stay Connected</h2>
+        <p>
+          Get updates about our latest fabrication projects and engineering
+          innovations.
+        </p>
+      </div>
+
+      <div class="cta-right">
+        <input type="email" placeholder="Enter your email address">
+        <button>JOIN</button>
+      </div>
+
+    </div>
+
+    <div class="footer-bg-text">HK</div>
+
+  </div>
+
+
+  <!-- COPYRIGHT -->
+
   <div class="footer-bottom">
-    <p>© 2025 HK Enterprises. All rights reserved.</p>
+    © 2026 HK Enterprises. All Rights Reserved.
   </div>
+
 </footer>
 `;
 
