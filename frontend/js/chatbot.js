@@ -9,25 +9,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!chatToggle) return;
 
-    // Store session id
-    let session_id = localStorage.getItem("chat_session");
-
     /* ==============================
        OPEN / CLOSE CHAT
     ============================== */
 
     chatToggle.addEventListener("click", () => {
 
-        chatContainer.classList.add("open");
-        chatContainer.style.display = "flex";
-        chatInput.focus();
+    chatContainer.classList.add("open");
+    chatContainer.style.display = "flex";
+    chatInput.focus();
 
-        if (chatMessages.children.length === 0) {
-
-            typeWelcomeMessage();
-
-        }
-    });
+    if (chatMessages.children.length === 0) {
+        addMessage(
+            "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?",
+            "ai-message"
+        );
+    }
+});
 
     chatClose.addEventListener("click", () => {
         chatContainer.style.display = "none";
@@ -40,13 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
     chatSend.addEventListener("click", sendMessage);
 
     chatInput.addEventListener("keypress", function (e) {
-
         if (e.key === "Enter") {
-
             sendMessage();
-
         }
-
     });
 
     /* ==============================
@@ -56,57 +50,44 @@ document.addEventListener("DOMContentLoaded", function () {
     async function sendMessage() {
 
         const message = chatInput.value.trim();
-
         if (!message) return;
 
+        // Disable send button
         chatSend.disabled = true;
 
+        // Clear input
         chatInput.value = "";
 
+        // Add user message
         addMessage(message, "user-message");
 
+        // Show typing indicator
         const typingMsg = addMessage("...", "ai-message typing");
 
         try {
-
-            const response = await fetch(
-                "https://tejakodiyala01-hktufo.hf.space/chat",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        session_id: session_id
-                    })
-                }
-            );
+            const response = await fetch("https://tejakodiyala01-hktufo.hf.space/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
 
             const data = await response.json();
 
+            // Remove typing indicator
             typingMsg.remove();
 
-            addMessage(data.response || "Sorry, I couldn't generate a reply.", "ai-message");
-
-            session_id = data.session_id;
-
-            localStorage.setItem("chat_session", session_id);
+            addMessage(data.response, "ai-message");
 
         } catch (error) {
 
             typingMsg.remove();
-
             addMessage("Connection error. Please try again.", "ai-message");
 
         } finally {
-
+            // Re-enable button
             chatSend.disabled = false;
-
             chatInput.focus();
-
         }
-
     }
 
     /* ==============================
@@ -115,76 +96,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function addMessage(text, className) {
 
-        const wrapper = document.createElement("div");
+    const wrapper = document.createElement("div");
+    wrapper.className = "message-wrapper " + className;
 
-        wrapper.className = "message-wrapper " + className;
+    const msg = document.createElement("div");
+    msg.className = "message-bubble";
+    msg.textContent = text;
 
-        const msg = document.createElement("div");
+    if (className === "ai-message") {
 
-        msg.className = "message-bubble";
+        const avatar = document.createElement("div");
+        avatar.className = "ai-avatar";
+        const img = document.createElement("img");
+        img.src = "images/tufo-avatar.png";  // add your image
+        img.className = "ai-avatar-img";
+        avatar.appendChild(img);
 
-        msg.textContent = text;
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(msg);
 
-        if (className.includes("ai-message")) {
+    } else {
 
-            const avatar = document.createElement("div");
-
-            avatar.className = "ai-avatar";
-
-            const img = document.createElement("img");
-
-            img.src = "images/tufo-avatar.png";
-
-            img.className = "ai-avatar-img";
-
-            avatar.appendChild(img);
-
-            wrapper.appendChild(avatar);
-
-            wrapper.appendChild(msg);
-
-        } else {
-
-            wrapper.appendChild(msg);
-
-        }
-
-        chatMessages.appendChild(wrapper);
-
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        return wrapper;
-
+        wrapper.appendChild(msg);
     }
 
-    /* ==============================
-       WELCOME MESSAGE
-    ============================== */
+    chatMessages.appendChild(wrapper);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return wrapper;
+}
 
     function typeWelcomeMessage() {
+    const text = "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?";
+    const msg = document.createElement("div");
+    msg.className = "message ai-message";
+    chatMessages.appendChild(msg);
 
-        const text = "Hi, I’m Tufo, your AI assistant at HK Enterprises. How may I help you today?";
-
-        const msg = document.createElement("div");
-
-        msg.className = "message-bubble ai-message";
-
-        chatMessages.appendChild(msg);
-
-        let i = 0;
-
-        const interval = setInterval(() => {
-
-            msg.textContent += text[i];
-
-            i++;
-
-            if (i >= text.length) clearInterval(interval);
-
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        }, 20);
-
-    }
+    let i = 0;
+    const interval = setInterval(() => {
+        msg.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(interval);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 20);
+}
 
 });
+
+async function sendMessage(message) {
+
+  const response = await fetch(
+    "https://tejakodiyala01-hktufo.hf.space/chat",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    }
+  );
+
+  const data = await response.json();
+
+  let text = data.response;
+  let output = "";
+
+  for (let i = 0; i < text.length; i++) {
+
+    output += text[i];
+
+    document.getElementById("bot-message").innerText = output;
+
+    await new Promise(r => setTimeout(r, 20));
+  }
+}
