@@ -18,12 +18,12 @@ const headerHTML = `
 
       <!-- DESKTOP NAV -->
       <nav class="desktop-nav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link" href="infrastructure.html">Infrastructure</a>
-        <a class="nav-link" href="industries.html">Industries</a>
-        <a class="nav-link" href="contact.html">Contact Us</a>
+        <a href="/">Home</a>
+<a href="/about">About</a>
+<a href="/services">Services</a>
+<a href="/infrastructure">Infrastructure</a>
+<a href="/industries">Industries</a>
+<a href="/contact">Contact</a>
 
         <a href="contact.html" class="quote-btn">
           Get a Quote
