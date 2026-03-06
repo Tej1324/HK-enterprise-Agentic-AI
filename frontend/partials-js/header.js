@@ -19,11 +19,11 @@ const headerHTML = `
       <!-- DESKTOP NAV -->
       <nav class="desktop-nav">
         <a href="/">Home</a>
-<a href="/about">About</a>
-<a href="/services">Services</a>
-<a href="/infrastructure">Infrastructure</a>
-<a href="/industries">Industries</a>
-<a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/infrastructure">Infrastructure</a>
+        <a href="/industries">Industries</a>
+        <a href="/contact">Contact</a>
 
         <a href="contact.html" class="quote-btn">
           Get a Quote
