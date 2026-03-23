@@ -9,6 +9,10 @@
   --light: #f8fafc;
   --gray: #475569;
   --header-height: 96px;
+  --floating-edge-offset: 25px;
+  --whatsapp-size: 55px;
+  --floating-stack-gap: 16px;
+  --chat-launcher-size: 58px;
 }
 
 /* ================== RESET & BASE ================== */
@@ -409,10 +413,10 @@ p {
 
 .whatsapp-btn {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 55px;
-  height: 55px;
+  bottom: var(--floating-edge-offset);
+  right: var(--floating-edge-offset);
+  width: var(--whatsapp-size);
+  height: var(--whatsapp-size);
   background: #25D366;
   color: white;
   border-radius: 50%;
@@ -428,9 +432,14 @@ p {
   max-width: 1200px;
   margin: 0 auto;
 }
-.whatsapp-btn:hover,
-#chat-toggle:hover {
+.whatsapp-btn:hover {
   transform: scale(1.1);
   transition: 0.3s ease;
 }
 
+@media (max-width: 420px) {
+  :root {
+    --floating-edge-offset: 16px;
+    --floating-stack-gap: 12px;
+  }
+}

@@ -1,3 +1,6 @@
+const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const navHref = (prettyPath, localFile) => (isLocalHost ? localFile : prettyPath);
+
 const headerHTML = `
 <header id="mainHeader" class="site-header">
 
@@ -18,14 +21,14 @@ const headerHTML = `
 
       <!-- DESKTOP NAV -->
       <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/services">Services</a>
-        <a href="/infrastructure">Infrastructure</a>
-        <a href="/industries">Industries</a>
-        <a href="/contact">Contact</a>
+        <a href="${navHref('/', 'index.html')}">Home</a>
+        <a href="${navHref('/about', 'about.html')}">About</a>
+        <a href="${navHref('/services', 'services.html')}">Services</a>
+        <a href="${navHref('/infrastructure', 'infrastructure.html')}">Infrastructure</a>
+        <a href="${navHref('/industries', 'industries.html')}">Industries</a>
+        <a href="${navHref('/contact', 'contact.html')}">Contact</a>
 
-        <a href="contact.html" class="quote-btn">
+        <a href="${navHref('/contact', 'contact.html')}" class="quote-btn">
           Get a Quote
         </a>
       </nav>
@@ -43,12 +46,12 @@ const headerHTML = `
   <!-- MOBILE MENU -->
   <div id="mobileMenu" class="mobile-menu">
     <nav>
-      <a class="mobile-link" href="index.html">Home</a>
-      <a class="mobile-link" href="about.html">About</a>
-      <a class="mobile-link" href="services.html">Services</a>
-      <a class="mobile-link" href="infrastructure.html">Infrastructure</a>
-      <a class="mobile-link" href="industries.html">Industries</a>
-      <a class="mobile-link" href="contact.html">Contact</a>
+      <a class="mobile-link" href="${navHref('/', 'index.html')}">Home</a>
+      <a class="mobile-link" href="${navHref('/about', 'about.html')}">About</a>
+      <a class="mobile-link" href="${navHref('/services', 'services.html')}">Services</a>
+      <a class="mobile-link" href="${navHref('/infrastructure', 'infrastructure.html')}">Infrastructure</a>
+      <a class="mobile-link" href="${navHref('/industries', 'industries.html')}">Industries</a>
+      <a class="mobile-link" href="${navHref('/contact', 'contact.html')}">Contact</a>
     </nav>
   </div>
 </header>

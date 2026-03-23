@@ -4,28 +4,20 @@ from app.llm_service import generate_response
 
 router = APIRouter()
 
-conversation_history = []
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
 
 
 class ChatRequest(BaseModel):
     message: str
+    history: list[ChatMessage] = []
 
 
 @router.post("/chat")
 def chat(request: ChatRequest):
-
-    conversation_history.append({
-        "role": "user",
-        "content": request.message
-    })
-
-    recent_history = conversation_history[-6:]
-
+    recent_history = [msg.model_dump() for msg in request.history[-8:]]
     reply = generate_response(request.message, recent_history)
-
-    conversation_history.append({
-        "role": "assistant",
-        "content": reply
-    })
 
     return {"response": reply}

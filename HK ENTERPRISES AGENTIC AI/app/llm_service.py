@@ -1,70 +1,107 @@
+import os
 import requests
-from app.vector_store import retrieve_relevant_chunks
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "mistral"
+ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
+ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
-SMALL_TALK = ["hi", "hello", "thanks", "thank you", "no", "okay", "ok", "bye"]
+SYSTEM_PROMPT = """
+You are the official AI assistant for HK Enterprises, a precision metal fabrication company based in Sanand, Ahmedabad, Gujarat, India.
+
+COMPANY OVERVIEW:
+- Name: HK Enterprises
+- Founded: 2005
+- Experience: 20+ years in metal fabrication
+- Location: E-605, GIDC Sanand-II (Bol GIDC), Sanand, Ahmedabad, Gujarat 382170, India
+
+SERVICES:
+1. 2D Fiber Laser Cutting
+   - Mild Steel: up to 25mm thickness
+   - Stainless Steel: up to 16mm thickness
+   - Aluminium, Copper & Brass: up to 8mm thickness
+
+2. 3D Laser Cutting
+   - Complex contour cutting & angled profiles
+   - Tubes, pipes, channels & structural profiles
+   - Automotive & industrial parts
+
+3. CNC Bending
+   - Techno CNC Press Brake: 170-ton bending force
+   - Max bending length: 3,000mm
+   - Precision panels, enclosures, frames, structural parts
+
+4. Metal Fabrication
+   - Laser Welding, MIG, TIG, ARC welding
+   - Sub-assembly & final assembly
+   - Structural fabrication: frames, skids, platforms, cabinets, housings
+
+5. Powder Coating (via associated facility)
+   - Surface protection with uniform coating thickness
+   - Suitable for electrical enclosures, panels, frames
+
+CONTACT:
+- Phone/WhatsApp: +91 9157317896
+- Email: hkenterprise694@gmail.com
+- Hours: Monday-Saturday, 9:00 AM - 6:00 PM
+
+KEY CONTACTS:
+- Haresh Oza (Managing Director): +91 99092 33950 - 25+ years experience in engineering & quality control
+- Jitu Raval (Founder): +91 9157317896 - Specializing in laser cutting & precision engineering
+
+CORE STRENGTHS:
+- Responsiveness: Realistic commitments, over-deliver
+- Flexibility: Lean, collaborative approach
+- Quality: Continuous improvement, defect-free fabrication
+- Experience: Skilled fabricators with design-for-manufacturing expertise
+
+TONE GUIDELINES:
+- Be professional, helpful, and concise
+- For quote requests, collect: material type, thickness, quantity, dimensions, and any finishing requirements
+- Always encourage visitors to call or email for urgent queries
+- Keep responses under 150 words unless technical detail is needed
+- Use bullet points for service specs to aid readability
+""".strip()
+
 
 def generate_response(user_message, conversation_history):
+    if not ANTHROPIC_API_KEY:
+        return "Backend missing ANTHROPIC_API_KEY. Please add it to the local backend .env file."
 
-    cleaned = user_message.lower().strip()
-
-    # 1️⃣ Handle small talk BEFORE retrieval
-    if cleaned in SMALL_TALK:
-        if cleaned in ["thanks", "thank you"]:
-            return "You're most welcome! If you need any information about HK Enterprises, I’m happy to assist."
-        if cleaned in ["bye"]:
-            return "Thank you for reaching out to HK Enterprises. Have a great day!"
-        return "Hello! How may I assist you regarding HK Enterprises today?"
-
-    # 2️⃣ Retrieve website content
-    retrieved = retrieve_relevant_chunks(user_message)
-
-    # 3️⃣ Apply similarity threshold
-    THRESHOLD = 0.25
-    filtered = [r for r in retrieved if r["score"] > THRESHOLD]
-
-    if not filtered:
-        return "I’m sorry, I couldn’t find that information on our website. I’d be happy to connect you with our team for further assistance."
-
-    context = "\n\n".join([r["text"] for r in filtered])
-
-    # 4️⃣ Add conversation memory
-    history_text = ""
+    messages = []
     for msg in conversation_history:
-        history_text += f'{msg["role"].upper()}: {msg["content"]}\n'
+        role = msg.get("role")
+        content = msg.get("content", "")
+        if role in {"user", "assistant"} and content:
+            api_role = "assistant" if role == "assistant" else "user"
+            messages.append({"role": api_role, "content": content})
 
-    prompt = f"""
-You are the professional AI assistant of HK Enterprises.
-You speak like a polite receptionist.
-
-Use ONLY the company information provided.
-
-Conversation so far:
-{history_text}
-
-Company Information:
-{context}
-
-Customer Question:
-{user_message}
-
-Answer professionally:
-"""
+    if not messages or messages[-1]["role"] != "user":
+        messages.append({"role": "user", "content": user_message})
 
     response = requests.post(
-    OLLAMA_URL,
-    json={
-        "model": MODEL_NAME,
-        "prompt": prompt,
-        "stream": False,
-        "options": {
-            "num_predict": 150,   # limits response length
-            "temperature": 0.2    # makes responses focused
-        }
-    }
-)
+        ANTHROPIC_API_URL,
+        headers={
+            "Content-Type": "application/json",
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+        },
+        json={
+            "model": ANTHROPIC_MODEL,
+            "max_tokens": 512,
+            "system": SYSTEM_PROMPT,
+            "messages": messages,
+        },
+        timeout=20,
+    )
 
+    data = response.json()
 
-    return response.json()["response"]
+    if not response.ok:
+        error_message = data.get("error", {}).get("message", "Claude request failed")
+        return f"Claude API error: {error_message}"
+
+    content = data.get("content", [])
+    if content and content[0].get("text"):
+        return content[0]["text"]
+
+    return "I’m sorry, I couldn’t generate a response right now. Please call us at +91 9157317896."
