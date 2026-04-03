@@ -2,9 +2,9 @@ import os
 
 import requests
 
-XAI_API_URL = os.getenv("XAI_API_URL", "https://api.x.ai/v1/chat/completions")
-XAI_MODEL = os.getenv("XAI_MODEL", "grok-4.20-beta-latest-non-reasoning")
-XAI_API_KEY = os.getenv("XAI_API_KEY")
+GROQ_API_URL = os.getenv("GROQ_API_URL", "https://api.groq.com/openai/v1/chat/completions")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 SYSTEM_PROMPT = """
 You are the official AI assistant for HK Enterprises, a precision metal fabrication company based in Sanand, Ahmedabad, Gujarat, India.
@@ -80,18 +80,18 @@ def _build_messages(user_message, conversation_history):
 
 
 def generate_response(user_message, conversation_history):
-    if not XAI_API_KEY:
-        return "Backend missing XAI_API_KEY. Add it in your Render environment variables before going live."
+    if not GROQ_API_KEY:
+        return "Backend missing GROQ_API_KEY. Add it in your Render environment variables before going live."
 
     try:
         response = requests.post(
-            XAI_API_URL,
+            GROQ_API_URL,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {XAI_API_KEY}",
+                "Authorization": f"Bearer {GROQ_API_KEY}",
             },
             json={
-                "model": XAI_MODEL,
+                "model": GROQ_MODEL,
                 "messages": _build_messages(user_message, conversation_history),
                 "max_tokens": 512,
                 "temperature": 0.3,
@@ -99,7 +99,7 @@ def generate_response(user_message, conversation_history):
             timeout=30,
         )
     except requests.RequestException as exc:
-        return f"Grok API request failed: {exc}"
+        return f"Groq API request failed: {exc}"
 
     try:
         data = response.json()
@@ -109,10 +109,10 @@ def generate_response(user_message, conversation_history):
     if not response.ok:
         error = data.get("error")
         if isinstance(error, dict):
-            error_message = error.get("message", "Grok request failed")
+            error_message = error.get("message", "Groq request failed")
         else:
-            error_message = str(error or data or "Grok request failed")
-        return f"Grok API error: {error_message}"
+            error_message = str(error or data or "Groq request failed")
+        return f"Groq API error: {error_message}"
 
     choices = data.get("choices", [])
     if choices:
