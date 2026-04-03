@@ -1,8 +1,9 @@
-import os
+from pathlib import Path
+
 from bs4 import BeautifulSoup
 
-# Absolute path to frontend folder
-WEBSITE_FOLDER = "/Users/tejakodiyala/Desktop/HK ENTERPRIZE/frontend"
+BASE_DIR = Path(__file__).resolve().parents[2]
+WEBSITE_FOLDER = BASE_DIR / "frontend"
 
 def extract_text_from_html(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -17,10 +18,9 @@ def extract_text_from_html(file_path):
 def load_website_content():
     documents = []
 
-    for file in os.listdir(WEBSITE_FOLDER):
-        if file.endswith(".html"):
-            full_path = os.path.join(WEBSITE_FOLDER, file)
-            text = extract_text_from_html(full_path)
+    for file_path in WEBSITE_FOLDER.glob("*.html"):
+        if file_path.is_file():
+            text = extract_text_from_html(file_path)
             documents.append(text)
 
     return documents

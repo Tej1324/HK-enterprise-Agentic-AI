@@ -1,4 +1,5 @@
-import os
+from pathlib import Path
+
 import faiss
 import numpy as np
 from bs4 import BeautifulSoup
@@ -7,7 +8,8 @@ from sentence_transformers import SentenceTransformer
 # -------------------------------
 # CONFIG
 # -------------------------------
-FRONTEND_PATH = "/Users/tejakodiyala/Desktop/HK ENTERPRIZE/frontend"
+BASE_DIR = Path(__file__).resolve().parents[2]
+FRONTEND_PATH = BASE_DIR / "frontend"
 CHUNK_SIZE = 250   # characters per chunk
 TOP_K = 3
 
@@ -21,9 +23,9 @@ documents = []
 # -------------------------------
 # LOAD + CHUNK HTML FILES
 # -------------------------------
-for file in os.listdir(FRONTEND_PATH):
-    if file.endswith(".html"):
-        with open(os.path.join(FRONTEND_PATH, file), "r", encoding="utf-8") as f:
+for file_path in FRONTEND_PATH.glob("*.html"):
+    if file_path.is_file():
+        with open(file_path, "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f.read(), "html.parser")
 
             # Remove script/style

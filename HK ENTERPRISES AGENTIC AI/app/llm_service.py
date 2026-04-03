@@ -1,9 +1,10 @@
 import os
+
 import requests
 
-ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
-ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+XAI_API_URL = os.getenv("XAI_API_URL", "https://api.x.ai/v1/chat/completions")
+XAI_MODEL = os.getenv("XAI_MODEL", "grok-4.20-beta-latest-non-reasoning")
+XAI_API_KEY = os.getenv("XAI_API_KEY")
 
 SYSTEM_PROMPT = """
 You are the official AI assistant for HK Enterprises, a precision metal fabrication company based in Sanand, Ahmedabad, Gujarat, India.
@@ -63,45 +64,61 @@ TONE GUIDELINES:
 """.strip()
 
 
-def generate_response(user_message, conversation_history):
-    if not ANTHROPIC_API_KEY:
-        return "Backend missing ANTHROPIC_API_KEY. Please add it to the local backend .env file."
+def _build_messages(user_message, conversation_history):
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
-    messages = []
     for msg in conversation_history:
         role = msg.get("role")
-        content = msg.get("content", "")
+        content = (msg.get("content") or "").strip()
         if role in {"user", "assistant"} and content:
-            api_role = "assistant" if role == "assistant" else "user"
-            messages.append({"role": api_role, "content": content})
+            messages.append({"role": role, "content": content})
 
     if not messages or messages[-1]["role"] != "user":
         messages.append({"role": "user", "content": user_message})
 
-    response = requests.post(
-        ANTHROPIC_API_URL,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01",
-        },
-        json={
-            "model": ANTHROPIC_MODEL,
-            "max_tokens": 512,
-            "system": SYSTEM_PROMPT,
-            "messages": messages,
-        },
-        timeout=20,
-    )
+    return messages
 
-    data = response.json()
+
+def generate_response(user_message, conversation_history):
+    if not XAI_API_KEY:
+        return "Backend missing XAI_API_KEY. Add it in your Render environment variables before going live."
+
+    try:
+        response = requests.post(
+            XAI_API_URL,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {XAI_API_KEY}",
+            },
+            json={
+                "model": XAI_MODEL,
+                "messages": _build_messages(user_message, conversation_history),
+                "max_tokens": 512,
+                "temperature": 0.3,
+            },
+            timeout=30,
+        )
+    except requests.RequestException as exc:
+        return f"Grok API request failed: {exc}"
+
+    try:
+        data = response.json()
+    except ValueError:
+        data = {}
 
     if not response.ok:
-        error_message = data.get("error", {}).get("message", "Claude request failed")
-        return f"Claude API error: {error_message}"
+        error = data.get("error")
+        if isinstance(error, dict):
+            error_message = error.get("message", "Grok request failed")
+        else:
+            error_message = str(error or data or "Grok request failed")
+        return f"Grok API error: {error_message}"
 
-    content = data.get("content", [])
-    if content and content[0].get("text"):
-        return content[0]["text"]
+    choices = data.get("choices", [])
+    if choices:
+        message = choices[0].get("message", {})
+        content = message.get("content")
+        if isinstance(content, str) and content.strip():
+            return content.strip()
 
     return "I’m sorry, I couldn’t generate a response right now. Please call us at +91 9157317896."
