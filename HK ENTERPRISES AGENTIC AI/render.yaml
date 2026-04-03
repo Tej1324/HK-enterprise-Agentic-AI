@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: hk-enterprises-ai-backend
+    runtime: python
+    rootDir: HK ENTERPRISES AGENTIC AI
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: XAI_API_KEY
+        sync: false
+      - key: XAI_MODEL
+        value: grok-4.20-beta-latest-non-reasoning
+      - key: ALLOWED_ORIGINS
+        sync: false
